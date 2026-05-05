@@ -3,7 +3,7 @@ public class Demo {
     public static void main(String[] args) {
         Graph<String> graph = new Graph<>();
 
-        graph.addVertex("Misheuwel");
+        graph.addVertex("Arendskruin");
         graph.addVertex("Wynberg");
         graph.addVertex("Doringkraal");
         graph.addVertex("Groenvlei");
@@ -15,7 +15,7 @@ public class Demo {
         graph.addVertex("Doodskloof");
         graph.addVertex("Diepfontein");
 
-        graph.addEdge("Misheuwel", "Wynberg", 2.0, true);
+        graph.addEdge("Arendskruin", "Wynberg", 2.0, true);
         graph.addEdge("Wynberg", "Doringkraal", 2.0, true);
         graph.addEdge("Doringkraal", "Groenvlei", 4.0, true);
         graph.addEdge("Groenvlei", "Breevallei", 4.0, true);
@@ -29,7 +29,7 @@ public class Demo {
         graph.addEdge("Doodskloof", "Diepfontein", 2.0, true);
         graph.addEdge("Wagterspos", "Koningsrus", 3.0, true);
 
-        PathHolder<String> pathHolder = graph.bfs("Misheuwel", "Doodskloof");
+        PathHolder<String> pathHolder = graph.bfs("Arendskruin", "Doodskloof");
 
         System.out.println("Roete: " + pathHolder.getPath());
         System.out.println("Totale gewig: " + pathHolder.getTotalWeight());

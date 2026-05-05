@@ -34,7 +34,7 @@ public class Graph<T> {
                 allPaths.add(new ArrayList<>(path));
                 continue;
             }
-
+            
             for (Edge<T> edge : adjacencyList.getOrDefault(current, new ArrayList<>())) {
                 if (!path.contains(edge.getDestination())) {
                     List<T> newPath = new ArrayList<>(path);
@@ -78,23 +78,5 @@ public class Graph<T> {
         }
 
         return totalWeight;
-    }
-
-    private static class Edge<T> {
-        private final T destination;
-        private final double weight;
-
-        public Edge(T destination, double weight) {
-            this.destination = destination;
-            this.weight = weight;
-        }
-
-        public T getDestination() {
-            return destination;
-        }
-
-        public double getWeight() {
-            return weight;
-        }
     }
 }
