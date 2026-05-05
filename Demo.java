@@ -15,20 +15,23 @@ public class Demo {
         graph.addVertex("Doodskloof");
         graph.addVertex("Diepfontein");
 
-        graph.addEdge("Misheuwel", "Wynberg", true);
-        graph.addEdge("Wynberg", "Doringkraal", true);
-        graph.addEdge("Doringkraal", "Groenvlei", true);
-        graph.addEdge("Groenvlei", "Wolwekloof", true);
-        graph.addEdge("Doringkraal", "Goudstroom", true);
-        graph.addEdge("Goudstroom", "Breevallei", true);
-        graph.addEdge("Breevallei", "Wagterspos", true);
-        graph.addEdge("Goudstroom", "Koningsrus", true);
-        graph.addEdge("Koningsrus", "Diepfontein", true);
-        graph.addEdge("Doodskloof", "Diepfontein", true);
-        graph.addEdge("Wagterspos", "Koningsrus", true);
+        graph.addEdge("Misheuwel", "Wynberg", 2.0, true);
+        graph.addEdge("Wynberg", "Doringkraal", 2.0, true);
+        graph.addEdge("Doringkraal", "Groenvlei", 4.0, true);
+        graph.addEdge("Groenvlei", "Breevallei", 4.0, true);
+        graph.addEdge("Breevallei", "Wolwekloof", 4.0, true);
+        graph.addEdge("Groenvlei", "Wolwekloof", 2.0, true);
+        graph.addEdge("Doringkraal", "Goudstroom", 3.0, true);
+        graph.addEdge("Goudstroom", "Breevallei", 2.0, true);
+        graph.addEdge("Breevallei", "Doodskloof", 3.0, true);
+        graph.addEdge("Goudstroom", "Koningsrus", 3.0, true);
+        graph.addEdge("Koningsrus", "Diepfontein", 2.0, true);
+        graph.addEdge("Doodskloof", "Diepfontein", 2.0, true);
+        graph.addEdge("Wagterspos", "Koningsrus", 3.0, true);
 
         PathHolder<String> pathHolder = graph.bfs("Misheuwel", "Doodskloof");
-        
-        System.out.println("Roete vanaf Misheuwel na Doodskloof: " + pathHolder.getPath());
+
+        System.out.println("Roete: " + pathHolder.getPath());
+        System.out.println("Totale gewig: " + pathHolder.getTotalWeight());
     }
 }

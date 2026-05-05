@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Graph<T> {
-    private Map<T, List<T>> adjacencyList;
+    private Map<T, List<Edge<T>>> adjacencyList;
 
     public Graph() {
         this.adjacencyList = new HashMap<>();
@@ -11,44 +11,51 @@ public class Graph<T> {
         adjacencyList.putIfAbsent(vertex, new ArrayList<>());
     }
 
-    public void addEdge(T source, T destination, boolean bidirectional) {
+    public void addEdge(T source, T destination, double weight, boolean bidirectional) {
         if (!adjacencyList.containsKey(source)) addVertex(source);
         if (!adjacencyList.containsKey(destination)) addVertex(destination);
-        
-        adjacencyList.get(source).add(destination);
+
+        adjacencyList.get(source).add(new Edge<>(destination, weight));
         if (bidirectional) {
-            adjacencyList.get(destination).add(source);
+            adjacencyList.get(destination).add(new Edge<>(source, weight));
         }
     }
 
     public PathHolder<T> bfs(T start, T end) {
+        Map<T, Double> distances = new HashMap<>();
         Map<T, T> parentMap = new HashMap<>();
-        Queue<T> queue = new LinkedList<>();
+        PriorityQueue<Node<T>> queue = new PriorityQueue<>(Comparator.comparingDouble(Node::getDistance));
         Set<T> visited = new HashSet<>();
 
-        queue.add(start);
-        visited.add(start);
+        for (T vertex : adjacencyList.keySet()) {
+            distances.put(vertex, Double.MAX_VALUE);
+        }
+        distances.put(start, 0.0);
+        queue.add(new Node<>(start, 0.0));
 
         while (!queue.isEmpty()) {
-            T current = queue.poll();
-            
-            if (current.equals(end)) {
-                return constructPath(parentMap, start, end);
-            }
+            Node<T> currentNode = queue.poll();
+            T current = currentNode.getVertex();
 
-            for (T neighbor : adjacencyList.getOrDefault(current, new ArrayList<>())) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
+            if (visited.contains(current)) continue;
+            visited.add(current);
+
+            for (Edge<T> edge : adjacencyList.getOrDefault(current, new ArrayList<>())) {
+                T neighbor = edge.getDestination();
+                double newDist = distances.get(current) + edge.getWeight();
+
+                if (newDist < distances.get(neighbor)) {
+                    distances.put(neighbor, newDist);
                     parentMap.put(neighbor, current);
-                    queue.add(neighbor);
+                    queue.add(new Node<>(neighbor, newDist));
                 }
             }
         }
 
-        return new PathHolder<>(new ArrayList<>());
+        return constructPath(parentMap, distances, start, end);
     }
 
-    private PathHolder<T> constructPath(Map<T, T> parentMap, T start, T end) {
+    private PathHolder<T> constructPath(Map<T, T> parentMap, Map<T, Double> distances, T start, T end) {
         List<T> path = new ArrayList<>();
         T current = end;
 
@@ -58,9 +65,27 @@ public class Graph<T> {
         }
 
         if (!path.isEmpty() && path.get(0).equals(start)) {
-            return new PathHolder<>(path);
+            return new PathHolder<>(path, distances.get(end));
         }
 
-        return new PathHolder<>(new ArrayList<>());
+        return new PathHolder<>(new ArrayList<>(), Double.MAX_VALUE);
+    }
+
+    private static class Edge<T> {
+        private final T destination;
+        private final double weight;
+
+        public Edge(T destination, double weight) {
+            this.destination = destination;
+            this.weight = weight;
+        }
+
+        public T getDestination() {
+            return destination;
+        }
+
+        public double getWeight() {
+            return weight;
+        }
     }
 }
