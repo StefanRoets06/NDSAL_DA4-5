@@ -29,7 +29,7 @@ public class Demo {
         graph.addEdge("Doodskloof", "Diepfontein", 2.0, true);
         graph.addEdge("Wagterspos", "Koningsrus", 3.0, true);
 
-        PathHolder<String> pathHolder = graph.bfs("Arendskruin", "Doodskloof");
+        PathHolder<String> pathHolder = graph.wbfs("Arendskruin", "Doodskloof");
 
         System.out.println("Roete: " + pathHolder.getPath());
         System.out.println("Totale gewig: " + pathHolder.getTotalWeight());

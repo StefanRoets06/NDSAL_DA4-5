@@ -21,7 +21,7 @@ public class Graph<T> {
         }
     }
 
-    public PathHolder<T> bfs(T start, T end) {
+    public PathHolder<T> wbfs(T start, T end) {
         List<List<T>> allPaths = new ArrayList<>();
         Queue<List<T>> queue = new LinkedList<>();
         queue.add(Collections.singletonList(start));
