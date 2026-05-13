@@ -1,8 +1,10 @@
 public class Demo {
 
     public static void main(String[] args) {
+        // Skep n nuwe grafiek datastruktuur
         Graph<String> graph = new Graph<>();
 
+        // Skep nuwe punte op die grafiek
         graph.addVertex("Arendskruin");
         graph.addVertex("Wynberg");
         graph.addVertex("Doringkraal");
@@ -15,6 +17,7 @@ public class Demo {
         graph.addVertex("Doodskloof");
         graph.addVertex("Diepfontein");
 
+        // Skep sye tussen die punte
         graph.addEdge("Arendskruin", "Wynberg", 2.0, true);
         graph.addEdge("Wynberg", "Doringkraal", 2.0, true);
         graph.addEdge("Doringkraal", "Groenvlei", 4.0, true);
@@ -29,8 +32,10 @@ public class Demo {
         graph.addEdge("Doodskloof", "Diepfontein", 2.0, true);
         graph.addEdge("Wagterspos", "Koningsrus", 3.0, true);
 
+        // Begin die weighted bfs algoritme
         PathHolder<String> pathHolder = graph.wbfs("Arendskruin", "Doodskloof");
 
+        // Toon die ruseltate van die soektog
         System.out.println("Roete: " + pathHolder.getPath());
         System.out.println("Totale gewig: " + pathHolder.getTotalWeight());
     }

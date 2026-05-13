@@ -1,3 +1,4 @@
+// Datastruktuur om elke sy en sy gewig te stoor
 public class Edge<T> {
     private final T destination;
     private final double weight;

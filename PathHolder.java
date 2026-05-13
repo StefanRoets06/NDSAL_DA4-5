@@ -1,5 +1,6 @@
 import java.util.List;
 
+// PathHolder datastruktuur om die paaie van die begin tot die bestemming te stoor
 public class PathHolder<T> {
     private List<T> path;
     private double totalWeight;
